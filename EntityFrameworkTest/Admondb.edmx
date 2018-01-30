@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sqliteDbTest01Model.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;G:\Visual Studio 2015\Projects\SqliteTests\EntityFrameworkTest\bin\Debug\sqliteDbTest01.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="integer" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Edad" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="EmpleadoID" />
+          </Key>
+          <Property Name="EmpleadoID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="EDAD" Type="integer" />
+        </EntityType>
+        <EntityType Name="Fechas">
+          <Key>
+            <PropertyRef Name="FechasID" />
+          </Key>
+          <Property Name="FechasID" Type="integer" Nullable="false" />
+          <Property Name="FechaEntrega" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FechaRecibido" Type="int" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="integer" Nullable="false" />
+          <Property Name="Cliente" Type="integer" Nullable="false" />
+          <Property Name="Empleado" Type="integer" Nullable="false" />
+          <Property Name="FechaEntrega" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Entregado" Type="integer" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Contra" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="PrimerLog" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="UltimoLog" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <Association Name="FK_Pedidos_0_0">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="EmpleadoID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="Empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedidos_1_0">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sqliteDbTest01ModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" store:Type="Tables" />
+          <EntitySet Name="Fechas" EntityType="Self.Fechas" store:Type="Tables" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" store:Type="Tables" />
+          <AssociationSet Name="FK_Pedidos_0_0" Association="Self.FK_Pedidos_0_0">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_1_0" Association="Self.FK_Pedidos_1_0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sqliteDbTest01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Edad" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_1_0" FromRole="Clientes" ToRole="Pedidos" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="EmpleadoID" />
+          </Key>
+          <Property Name="EmpleadoID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="EDAD" Type="Int64" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_0_0" FromRole="Empleados" ToRole="Pedidos" />
+        </EntityType>
+        <EntityType Name="Fecha">
+          <Key>
+            <PropertyRef Name="FechasID" />
+          </Key>
+          <Property Name="FechasID" Type="Int64" Nullable="false" />
+          <Property Name="FechaEntrega" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FechaRecibido" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="Int64" Nullable="false" />
+          <Property Name="Cliente" Type="Int64" Nullable="false" />
+          <Property Name="Empleado" Type="Int64" Nullable="false" />
+          <Property Name="FechaEntrega" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Entregado" Type="Int64" />
+          <NavigationProperty Name="Cliente1" Relationship="Self.FK_Pedidos_1_0" FromRole="Pedidos" ToRole="Clientes" />
+          <NavigationProperty Name="Empleado1" Relationship="Self.FK_Pedidos_0_0" FromRole="Pedidos" ToRole="Empleados" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contra" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimerLog" Type="String" />
+          <Property Name="UltimoLog" Type="String" />
+        </EntityType>
+        <Association Name="FK_Pedidos_1_0">
+          <End Role="Clientes" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedidos_0_0">
+          <End Role="Empleados" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="EmpleadoID" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="Empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sqliteDbTest01Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleado" />
+          <EntitySet Name="Fechas" EntityType="Self.Fecha" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedido" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Pedidos_1_0" Association="Self.FK_Pedidos_1_0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_0_0" Association="Self.FK_Pedidos_0_0">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sqliteDbTest01ModelStoreContainer" CdmEntityContainer="sqliteDbTest01Entities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="sqliteDbTest01Model.Cliente">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="sqliteDbTest01Model.Empleado">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="EmpleadoID" ColumnName="EmpleadoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="EDAD" ColumnName="EDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fechas">
+            <EntityTypeMapping TypeName="sqliteDbTest01Model.Fecha">
+              <MappingFragment StoreEntitySet="Fechas">
+                <ScalarProperty Name="FechasID" ColumnName="FechasID" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="FechaRecibido" ColumnName="FechaRecibido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedidos">
+            <EntityTypeMapping TypeName="sqliteDbTest01Model.Pedido">
+              <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Empleado" ColumnName="Empleado" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="Entregado" ColumnName="Entregado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="sqliteDbTest01Model.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Contra" ColumnName="Contra" />
+                <ScalarProperty Name="PrimerLog" ColumnName="PrimerLog" />
+                <ScalarProperty Name="UltimoLog" ColumnName="UltimoLog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
